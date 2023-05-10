@@ -1,0 +1,12 @@
+{
+  "AppSyncApiName": "pawpaw",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authpawpaw617582ef",
+      "Outputs.UserPoolId"
+    ]
+  },
+  "AuthModeLastUpdated": "2023-05-10T15:18:58.576Z"
+}

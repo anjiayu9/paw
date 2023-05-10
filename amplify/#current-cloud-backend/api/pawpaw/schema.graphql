@@ -1,0 +1,26 @@
+type Cat
+  @model
+  @searchable
+  @auth(rules: [{ allow: owner, operations: [create, delete, update, read] }]) {
+  id: ID!
+  name: String!
+  color: String
+  age: String
+}
+
+type Message @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  userID: String!
+  content: String!
+  createdAt: String
+}
+
+type Review
+  @model
+  @auth(rules: [{ allow: owner, operations: [create, delete, update, read] }]) {
+  id: ID!
+  catId: ID!
+  rating: Int!
+  comment: String
+  createdAt: String
+}
