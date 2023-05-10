@@ -1,0 +1,512 @@
+
+type Cat {
+  id: ID!
+  name: String!
+  color: String
+  age: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+type Message {
+  id: ID!
+  userID: String!
+  content: String!
+  createdAt: String
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+type Review {
+  id: ID!
+  catId: ID!
+  rating: Int!
+  comment: String
+  createdAt: String
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+type SearchableCatConnection {
+  items: [Cat]!
+  nextToken: String
+  total: Int
+  aggregateItems: [SearchableAggregateResult]!
+}
+
+type SearchableAggregateResult {
+  name: String!
+  result: SearchableAggregateGenericResult
+}
+
+type SearchableAggregateScalarResult {
+  value: Float!
+}
+
+type SearchableAggregateBucketResult {
+  buckets: [SearchableAggregateBucketResultItem]
+}
+
+type SearchableAggregateBucketResultItem {
+  key: String!
+  doc_count: Int!
+}
+
+union SearchableAggregateGenericResult = SearchableAggregateScalarResult | SearchableAggregateBucketResult
+
+type Query {
+  searchCats(filter: SearchableCatFilterInput, sort: [SearchableCatSortInput], limit: Int, nextToken: String, from: Int, aggregates: [SearchableCatAggregationInput]): SearchableCatConnection
+  getCat(id: ID!): Cat
+  listCats(filter: ModelCatFilterInput, limit: Int, nextToken: String): ModelCatConnection
+  getMessage(id: ID!): Message
+  listMessages(filter: ModelMessageFilterInput, limit: Int, nextToken: String): ModelMessageConnection
+  getReview(id: ID!): Review
+  listReviews(filter: ModelReviewFilterInput, limit: Int, nextToken: String): ModelReviewConnection
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelSubscriptionStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  in: [String]
+  notIn: [String]
+}
+
+input ModelSubscriptionIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  in: [Int]
+  notIn: [Int]
+}
+
+input ModelSubscriptionFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  in: [Float]
+  notIn: [Float]
+}
+
+input ModelSubscriptionBooleanInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelSubscriptionIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  in: [ID]
+  notIn: [ID]
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelCatConnection {
+  items: [Cat]!
+  nextToken: String
+}
+
+input ModelCatFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  color: ModelStringInput
+  age: ModelStringInput
+  and: [ModelCatFilterInput]
+  or: [ModelCatFilterInput]
+  not: ModelCatFilterInput
+}
+
+input ModelCatConditionInput {
+  name: ModelStringInput
+  color: ModelStringInput
+  age: ModelStringInput
+  and: [ModelCatConditionInput]
+  or: [ModelCatConditionInput]
+  not: ModelCatConditionInput
+}
+
+input CreateCatInput {
+  id: ID
+  name: String!
+  color: String
+  age: String
+}
+
+input UpdateCatInput {
+  id: ID!
+  name: String
+  color: String
+  age: String
+}
+
+input DeleteCatInput {
+  id: ID!
+}
+
+type Mutation {
+  createCat(input: CreateCatInput!, condition: ModelCatConditionInput): Cat
+  updateCat(input: UpdateCatInput!, condition: ModelCatConditionInput): Cat
+  deleteCat(input: DeleteCatInput!, condition: ModelCatConditionInput): Cat
+  createMessage(input: CreateMessageInput!, condition: ModelMessageConditionInput): Message
+  updateMessage(input: UpdateMessageInput!, condition: ModelMessageConditionInput): Message
+  deleteMessage(input: DeleteMessageInput!, condition: ModelMessageConditionInput): Message
+  createReview(input: CreateReviewInput!, condition: ModelReviewConditionInput): Review
+  updateReview(input: UpdateReviewInput!, condition: ModelReviewConditionInput): Review
+  deleteReview(input: DeleteReviewInput!, condition: ModelReviewConditionInput): Review
+}
+
+input ModelSubscriptionCatFilterInput {
+  id: ModelSubscriptionIDInput
+  name: ModelSubscriptionStringInput
+  color: ModelSubscriptionStringInput
+  age: ModelSubscriptionStringInput
+  and: [ModelSubscriptionCatFilterInput]
+  or: [ModelSubscriptionCatFilterInput]
+}
+
+type Subscription {
+  onCreateCat(filter: ModelSubscriptionCatFilterInput, owner: String): Cat @aws_subscribe(mutations: ["createCat"])
+  onUpdateCat(filter: ModelSubscriptionCatFilterInput, owner: String): Cat @aws_subscribe(mutations: ["updateCat"])
+  onDeleteCat(filter: ModelSubscriptionCatFilterInput, owner: String): Cat @aws_subscribe(mutations: ["deleteCat"])
+  onCreateMessage(filter: ModelSubscriptionMessageFilterInput, owner: String): Message @aws_subscribe(mutations: ["createMessage"])
+  onUpdateMessage(filter: ModelSubscriptionMessageFilterInput, owner: String): Message @aws_subscribe(mutations: ["updateMessage"])
+  onDeleteMessage(filter: ModelSubscriptionMessageFilterInput, owner: String): Message @aws_subscribe(mutations: ["deleteMessage"])
+  onCreateReview(filter: ModelSubscriptionReviewFilterInput, owner: String): Review @aws_subscribe(mutations: ["createReview"])
+  onUpdateReview(filter: ModelSubscriptionReviewFilterInput, owner: String): Review @aws_subscribe(mutations: ["updateReview"])
+  onDeleteReview(filter: ModelSubscriptionReviewFilterInput, owner: String): Review @aws_subscribe(mutations: ["deleteReview"])
+}
+
+type ModelMessageConnection {
+  items: [Message]!
+  nextToken: String
+}
+
+input ModelMessageFilterInput {
+  id: ModelIDInput
+  userID: ModelStringInput
+  content: ModelStringInput
+  createdAt: ModelStringInput
+  and: [ModelMessageFilterInput]
+  or: [ModelMessageFilterInput]
+  not: ModelMessageFilterInput
+}
+
+input ModelMessageConditionInput {
+  userID: ModelStringInput
+  content: ModelStringInput
+  createdAt: ModelStringInput
+  and: [ModelMessageConditionInput]
+  or: [ModelMessageConditionInput]
+  not: ModelMessageConditionInput
+}
+
+input CreateMessageInput {
+  id: ID
+  userID: String!
+  content: String!
+  createdAt: String
+}
+
+input UpdateMessageInput {
+  id: ID!
+  userID: String
+  content: String
+  createdAt: String
+}
+
+input DeleteMessageInput {
+  id: ID!
+}
+
+input ModelSubscriptionMessageFilterInput {
+  id: ModelSubscriptionIDInput
+  userID: ModelSubscriptionStringInput
+  content: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionMessageFilterInput]
+  or: [ModelSubscriptionMessageFilterInput]
+}
+
+type ModelReviewConnection {
+  items: [Review]!
+  nextToken: String
+}
+
+input ModelReviewFilterInput {
+  id: ModelIDInput
+  catId: ModelIDInput
+  rating: ModelIntInput
+  comment: ModelStringInput
+  createdAt: ModelStringInput
+  and: [ModelReviewFilterInput]
+  or: [ModelReviewFilterInput]
+  not: ModelReviewFilterInput
+}
+
+input ModelReviewConditionInput {
+  catId: ModelIDInput
+  rating: ModelIntInput
+  comment: ModelStringInput
+  createdAt: ModelStringInput
+  and: [ModelReviewConditionInput]
+  or: [ModelReviewConditionInput]
+  not: ModelReviewConditionInput
+}
+
+input CreateReviewInput {
+  id: ID
+  catId: ID!
+  rating: Int!
+  comment: String
+  createdAt: String
+}
+
+input UpdateReviewInput {
+  id: ID!
+  catId: ID
+  rating: Int
+  comment: String
+  createdAt: String
+}
+
+input DeleteReviewInput {
+  id: ID!
+}
+
+input ModelSubscriptionReviewFilterInput {
+  id: ModelSubscriptionIDInput
+  catId: ModelSubscriptionIDInput
+  rating: ModelSubscriptionIntInput
+  comment: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionReviewFilterInput]
+  or: [ModelSubscriptionReviewFilterInput]
+}
+
+input SearchableStringFilterInput {
+  ne: String
+  gt: String
+  lt: String
+  gte: String
+  lte: String
+  eq: String
+  match: String
+  matchPhrase: String
+  matchPhrasePrefix: String
+  multiMatch: String
+  exists: Boolean
+  wildcard: String
+  regexp: String
+  range: [String]
+}
+
+input SearchableIntFilterInput {
+  ne: Int
+  gt: Int
+  lt: Int
+  gte: Int
+  lte: Int
+  eq: Int
+  range: [Int]
+}
+
+input SearchableFloatFilterInput {
+  ne: Float
+  gt: Float
+  lt: Float
+  gte: Float
+  lte: Float
+  eq: Float
+  range: [Float]
+}
+
+input SearchableBooleanFilterInput {
+  eq: Boolean
+  ne: Boolean
+}
+
+input SearchableIDFilterInput {
+  ne: ID
+  gt: ID
+  lt: ID
+  gte: ID
+  lte: ID
+  eq: ID
+  match: ID
+  matchPhrase: ID
+  matchPhrasePrefix: ID
+  multiMatch: ID
+  exists: Boolean
+  wildcard: ID
+  regexp: ID
+  range: [ID]
+}
+
+input SearchableCatFilterInput {
+  id: SearchableIDFilterInput
+  name: SearchableStringFilterInput
+  color: SearchableStringFilterInput
+  age: SearchableStringFilterInput
+  createdAt: SearchableStringFilterInput
+  updatedAt: SearchableStringFilterInput
+  and: [SearchableCatFilterInput]
+  or: [SearchableCatFilterInput]
+  not: SearchableCatFilterInput
+}
+
+enum SearchableSortDirection {
+  asc
+  desc
+}
+
+enum SearchableCatSortableFields {
+  id
+  name
+  color
+  age
+  createdAt
+  updatedAt
+}
+
+input SearchableCatSortInput {
+  field: SearchableCatSortableFields
+  direction: SearchableSortDirection
+}
+
+enum SearchableAggregateType {
+  terms
+  avg
+  min
+  max
+  sum
+}
+
+enum SearchableCatAggregateField {
+  id
+  name
+  color
+  age
+  createdAt
+  updatedAt
+}
+
+input SearchableCatAggregationInput {
+  name: String!
+  type: SearchableAggregateType!
+  field: SearchableCatAggregateField!
+}
+
