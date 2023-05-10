@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-pawpaw-dev-83329-authRole",
+      "UnauthRoleArn": "arn:aws:iam::801948301874:role/amplify-pawpaw-dev-83329-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::801948301874:role/amplify-pawpaw-dev-83329-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-pawpaw-dev-83329-deployment",
+      "UnauthRoleName": "amplify-pawpaw-dev-83329-unauthRole",
+      "StackName": "amplify-pawpaw-dev-83329",
+      "StackId": "arn:aws:cloudformation:us-east-1:801948301874:stack/amplify-pawpaw-dev-83329/dec1cb90-ef2e-11ed-9a12-0a42d6cbe301",
+      "AmplifyAppId": "dfkf3xm6sa0gy"
+    },
+    "categories": {
+      "auth": {
+        "pawpaw617582ef": {}
+      }
+    }
+  }
+}
