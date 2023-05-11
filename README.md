@@ -1,70 +1,34 @@
-# Getting Started with Create React App
+## 1. Amazon DynamoDB:
+I used DynamoDB, a managed NoSQL database provided by AWS, to store and retrieve data. The AdoptionCenters component fetches adoption center data from a DynamoDB table using the AWS SDK.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 2. Amazon Cognito:
+I utilized Amazon Cognito to manage user authentication. With Cognito, users are able to sign up and log in to the application. The logged-in user's email is retrieved via the Auth.currentAuthenticatedUser() function.
 
-## Available Scripts
+## 3. Amazon SES (Simple Email Service):
+I utilized Amazon SES to send emails. Specifically, I set up a function to send the top 10 search results to the authenticated user's email address. The email sending logic is encapsulated in an AWS Lambda function which uses the SES service.
 
-In the project directory, you can run:
+## 4. AWS Lambda:
+I created an AWS Lambda function, sendEmailFunction, that sends emails using Amazon SES. The function is triggered by a POST request to the /sendEmail endpoint on API Gateway. I configured the function to accept parameters such as the sender's email address, the recipient's email address, the subject, and the HTML content of the email.
 
-### `npm start`
+## 5. AWS API Gateway:
+I configured AWS API Gateway to expose an HTTP endpoint that triggers the sendEmailFunction Lambda function. The /sendEmail POST endpoint accepts a JSON payload with the necessary email parameters and forwards them to the Lambda function.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 6. AWS Amplify:
+I used AWS Amplify to manage the front-end web application and handle the interaction with the back-end AWS services. Amplify's libraries were used in the React application to call the API Gateway endpoint and handle user authentication with Amazon Cognito. The Amplify CLI was used to configure the application's AWS resources.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 7. Google's Custom Search JSON API:
+I also integrated Google's Custom Search JSON API to fetch news articles related to the adoption centers. This is not an AWS service, but it is an important part of the functionality.
+All these features come together to create a seamless user experience. Users can search for adoption centers, get updated news articles related to these centers, and receive the top 10 results in their email. All of this is powered by a scalable, secure, and highly available backend infrastructure on AWS.
 
-### `npm test`
+## 8. GraphQL:
+I am utilizing GraphQL, a data query and manipulation language, which offers an efficient, powerful, and flexible approach to developing web APIs. GraphQL promotes a code-first philosophy, and its type system ensures applications only ask for what's possible and provide clear and helpful errors.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 9. AWS Amplify GraphQL API:
+I have incorporated AWS Amplify's GraphQL capabilities to manage and interact with my data. Amplify makes it easy to create, configure, and implement scalable mobile and web apps powered by AWS. Amplify seamlessly provisions and manages my AWS resources, such as my API (AppSync), right from the command line.
 
-### `npm run build`
+## 10. GraphQL Schema:
+The GraphQL schema for this application consists of three main types: Cat, Message, and Review.
+* Cat: Represents a cat that can be adopted. It has fields for id, name, color, and age. The @model directive indicates that it should be stored in a DynamoDB table, and the @searchable directive automatically configures search capabilities for this model in AWS Elasticsearch. The @auth directive provides owner-based authorization, meaning only the owner of a particular Cat object can perform certain operations (create, delete, update, read).
+* Message: Represents a message in the application, and it has fields for id, userID, content, and createdAt. The @model directive indicates that it should be stored in a DynamoDB table, and the @auth directive restricts access to the owner of the message.
+* Review: Represents a review of a cat. It has fields for id, catId, rating, comment, and createdAt. The @model directive indicates that it should be stored in a DynamoDB table, and the @auth directive provides owner-based authorization, similar to the Cat model.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
